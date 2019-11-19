@@ -1,3 +1,8 @@
+def cleanScreen
+  system "clear"
+  system "cls"
+end
+
 def titleScreen
   puts "__Game Title__"
   puts "\n\n"
@@ -6,8 +11,7 @@ def titleScreen
   puts "\n\n"
   puts "Press Any Key To Continue..."
   gets
-  system "clear"
-  system "cls"
+  cleanScreen
 end
 
 def intro
@@ -15,6 +19,10 @@ def intro
   sleep(2)
   puts "What is your name?"
   gets
+  sleep(2)
+  puts "How would you describe yourself in one scentence?"
+  gets
+  cleanScreen
 end
 
 
