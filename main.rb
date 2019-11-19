@@ -20,8 +20,21 @@ def intro
   puts "What is your name?"
   gets
   sleep(2)
-  puts "How would you describe yourself in one scentence?"
+  puts "How would you describe yourself in one word?"
   gets
+  sleep(2)
+  puts "I see. Thank you for your answers, but..."
+  sleep(2)
+  puts "In truth none of your choices matter."
+  sleep(2)
+  puts "In a game about choices, your choices dont really matter in the end."
+  sleep(3)
+  puts "This is the story of "
+  sleep(3)
+  puts "An average man who has found himself in a not so average situation."
+  sleep(3)
+  puts "In fact I think he's waking up now..."
+  sleep(5)
   cleanScreen
 end
 
