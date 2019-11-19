@@ -5,11 +5,18 @@ def titleScreen
   puts "Version 1.0.0"
   puts "\n\n"
   puts "Press Any Key To Continue..."
+  gets
+  system "clear"
+  system "cls"
 end
 
-
-def another_hello
-  puts "Hello World (from a method)"
+def intro
+  puts "First let us begin by asking a couple of simple questions."
+  sleep(2)
+  puts "What is your name?"
+  gets
 end
+
 
 titleScreen
+intro
