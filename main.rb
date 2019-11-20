@@ -154,11 +154,16 @@ class Player
 
 end
 
+class MyWindow < Gosu::Window
+  def initialize
+    super 40, 40
+    @tune = Gosu::Sample.new('E:\OPLRuby\intro.wav')
+    @tune.play()
+  end
+end
 
 def titleScreen
   cleanScreen
-  @tune = Gosu::Song.new('E:\OPLRuby\intro.wav')
-  @tune.play(looping = true)
   puts "__Game Title__"
   puts "\n\n"
   puts "Created By Nick A, Sam W, Tyler R, and Stefan"
@@ -174,7 +179,7 @@ def titleScreen
   puts "NOTE: CONTROLS ARE CASE SENSATIVE!"
   puts "\n\n"
   puts "Press Any Key To Continue..."
-  gets().chomp
+  gets
   cleanScreen
 end
 
@@ -182,25 +187,53 @@ def intro
   puts "First let us begin by asking a couple of simple questions."
   sleep(2)
   puts "What is your name?"
-  gets().chomp
+  your_name = gets()
+
   sleep(2)
   puts "How would you describe yourself in one word?"
-  gets().chomp
+  gets
   sleep(2)
-  puts "I see. Thank you for your answers, but..."
+  puts "I see."
   sleep(2)
-  puts "In truth none of your choices matter."
+  puts "Well then, #{your_name}"
   sleep(2)
-  puts "In a game about choices, your choices dont really matter in the end."
-  sleep(3)
-  puts "This is the story of "
-  sleep(3)
-  puts "An average man who has found himself in a not so average situation."
-  sleep(3)
-  puts "In fact I think he's waking up now..."
+  puts "In truth I dont really care about your answers."
+  sleep(2)
+  puts "What I really need you to do is..."
   sleep(5)
+  puts "To snap out of it."
+  sleep(2)
   cleanScreen
+  return your_name
 end
 
+def game(your_name, sroom)
+  playerOne = Player.new(your_name,sroom)
+  sleep(2)
+  puts playerOne.get_current_room().get_room_des()
 
-titleScreen
+  #Starts main gameplay loop
+  playerInput = gets().chomp
+  if(playerInput == "Move")
+      playerOne.get_move_options()
+  end
+
+  if(playerInput == "Inventory")
+      playerOne.print_inventory()
+      textLine()
+  end
+
+  #try Field
+  if(playerInput.include?("Examine"))
+      playerOne.examine(playerInput)
+  end
+end
+def control
+  titleScreen
+  sroom = Room.new("Start room","You awaken in the middle of a field. Confused by the voice you had just heard. You take a moment to look around. What to do first...",["Windmill","Shack","Vault 76"],["Feild"])
+  sroom.add_examine_res("You see a simple wooden sign a few feet in front of you.")
+  your_name = intro
+  game(your_name, sroom)
+end
+
+control
