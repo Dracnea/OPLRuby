@@ -157,7 +157,7 @@ end
 class MyWindow < Gosu::Window
   def initialize
     super 40, 40
-    @tune = Gosu::Sample.new('E:\OPLRuby\intro.wav')
+    @tune = Gosu::Sample.new('intro.wav')
     @tune.play()
   end
 end
@@ -228,6 +228,7 @@ def game(your_name, sroom)
       playerOne.examine(playerInput)
   end
 end
+
 def control
   titleScreen
   sroom = Room.new("Start room","You awaken in the middle of a field. Confused by the voice you had just heard. You take a moment to look around. What to do first...",["Windmill","Shack","Vault 76"],["Feild"])
