@@ -172,7 +172,7 @@ class Player
         puts"moving to #{room}"
 
         case room
-        when room = "Feild"
+        when room = "Field"
             room = @allRooms[0]
             @room = room
         when room = "Windmill"
@@ -226,9 +226,7 @@ end
 
 #public method that creates a buffer between text walls
 def textLine
-    puts("**")
-    puts("*")
-    puts("**\n")
+    puts("\n")
 end
 
 def cleanScreen
@@ -240,18 +238,17 @@ def titleScreen
   cleanScreen
   puts "__Game Title__"
   puts "\n\n"
-  puts "Created By Nick A, Sam W, Tyler R, and Stefan"
+  puts "Created By Nick A and Sam W"
   puts "Version 1.0.0"
   puts "\n\n"
   puts "__Action Control Keywords__"
+  puts "NOTE: CONTROLS ARE CASE SENSATIVE!"
   puts "\n"
   puts "Move: Use this command to move to a different area."
   puts "Examine: Use this command followed by a word to examine the object."
   puts "Use: Use this command as such 'use key' it might interact with something."
   puts "Inventory: Use this command to view the contents of your inventory."
-  puts "Quit: Use this command to end the game."
-  puts "\n"
-  puts "NOTE: CONTROLS ARE CASE SENSATIVE!"
+  puts "Quit / Exit: Use this command to end the game."
   puts "\n\n"
   puts "Press Any Key To Continue..."
   gets
@@ -261,9 +258,8 @@ end
 def intro
   puts "First let us begin by asking a couple of simple questions."
   sleep(2)
-  puts "What is your name?"
+  puts "What is your name?\n"
   your_name = gets().chomp
-
   sleep(2)
   puts "How would you describe yourself in one word?"
   gets
@@ -284,17 +280,17 @@ end
 
 def roomSetup
   #Create the rooms and add refs
-  sroom = Room.new("Field","You find yourself in the middle of an open feild.",["Windmill","Shack"],["Feild","Billy Bob"],[])
-  sroom.add_examine_res("You see the towering visage of Billy Bob The Bold standing in the feild.")
+  sroom = Room.new("Field","You find yourself in the middle of an open field.",["Windmill","Shack"],["Feild","Billy Bob"],[])
+  sroom.add_examine_res("You see the towering visage of Billy Bob The Bold standing in the distance.")
   sroom.add_examine_res("Hello friend! My name is Billy Bob. Would you like a rock? Of course you would!\nHere take one, I have a million of these bad boys.R")
 
-  windmill = Room.new("Windmill","You find yourself infront of a towering windmill. A man appears to be standing infront of the entrance.",["Shack","Feild","Lake"],["Man","WindMill"],["Dollar"])
-  windmill.add_examine_res("Hello there travaler, If you would like to enter my tower of mystery it costs a Dollar.\n If yah got no money, they you can suck a rock yah smuck! ")
-  windmill.add_examine_res("The Windmill is quite decrepit, However there is an ominous glow coming from inside.")
+  windmill = Room.new("Windmill","You find yourself infront of a towering Windmill. A strange little old man is standing at the entrance.",["Shack","Feild","Lake"],["Man","WindMill"],["Dollar"])
+  windmill.add_examine_res("Hello there traveler, If you would like to enter my tower of mystery it costs a Dollar.\n If yah got no money, they you can suck a rock yah smuck! ")
+  windmill.add_examine_res("The Windmill is quite decrepit. You notice that there is an ominous glow coming from inside.")
 
-  shack = Room.new("Shack", "You see a small shack that is painted baby bird blue with white accents. A lock is holding the doors closed.",["Feild","Windmill"],["Lock"],["Rock"])
-  shack.add_examine_res("A slighty rusted padlock blocks the way. It might be rusted but you can't break it with your bare hands. Might be do-able if you had a pair of Bear-Hands...")
-  shack.add_use_res("You try to smash the lock with your trusty rock but it has no effect on the lock.")
+  shack = Room.new("Shack", "You see a small shack that is painted baby bird blue with white accents. A lock is holding the doors closed.",["Field","Windmill"],["Lock"],["Rock"])
+  shack.add_examine_res("A slighty rusted padlock blocks the way. It might be rusted but you can't break it with your bare hands. It may be do-able if you had a pair of Bear-Hands...")
+  shack.add_use_res("You try to smash the lock with your trusty rock but it has no effect.")
 
   return [sroom, windmill, shack]
 end
@@ -308,12 +304,12 @@ def playGame
 
   #Starts main gameplay loop
 
-  puts "What would you like to do?"
+  puts "What would you like to do?\n"
   playerInput = gets().chomp
 
   while(!playerOne.isGameOver())
 
-      if(playerInput == "Quit")
+      if(playerInput == "Quit" || playerInput == "Exit")
           break;
       end
 
@@ -335,7 +331,7 @@ def playGame
       end
 
 
-      puts "What would you like to do?"
+      puts "What would you like to do?\n"
       playerInput = gets().chomp
   end
 end
