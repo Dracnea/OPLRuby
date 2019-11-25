@@ -110,13 +110,50 @@ class Player
         @allRooms = allRooms
     end
 
+    def end_game
+        @gameOver = true;
+        puts("The lock pops off the door and tumbles to the ground as you turn the key. The inside of the shack is covered in a layer of dust and an old computer terminal sags against the back wall.\nYou walk over to it as it springs to life. A message sprawls out across the screen and suddenly everything makes sense. You very being, the meaning of life and the secrets of the universe all rolled into one.\nA tear rolls down your cheek, as you now understand the truth of this world. The world around fade from existence until the only remaining objects are the two words that set you free.\n")
+        sleep(25)
+        print("H")
+        sleep(1)
+        print("E")
+        sleep(1)
+        print("L")
+        sleep(1)
+        print("L")
+        sleep(1)
+        print("O ")
+        sleep(1)
+        print("W")
+        sleep(1)
+        print("O")
+        sleep(1)
+        print("R")
+        sleep(1)
+        print("L")
+        sleep(1)
+        print("D")
+        sleep(1)
+    end
+
     def use(t)
         target = t[4,t.length].chomp
         puts("Target is " + target)
         if(@inventory.include?(target) && @room.get_use_targets.include?(target))
             found = @room.get_use_targets.index(target)
             rest = @room.get_use_ref(found)
+
             puts(rest)
+
+            if(target == "Goggles")
+                add_to_invent("Key")
+                puts("You got a Key!!")
+            end
+
+            if(target == "Key")
+                end_game
+            end
+
         else
             puts("Either you don't have that item or you can do that...")
         end
@@ -137,6 +174,9 @@ class Player
                 when "R"
                     puts("You got a Rock!!!")
                     add_to_invent("Rock")
+                when "G"
+                    puts("You got Goggles!!")
+                    add_to_invent("Goggles")
                 else
                     puts "You got nothing"
                 end
@@ -181,6 +221,12 @@ class Player
         when room = "Shack"
             room = @allRooms[2]
             @room = room
+        when room = "Lake"
+            room = @allRooms[3]
+            @room = room
+        when room = "TrashPile"
+            room = @allRooms[4]
+            @room = room
         else
             puts("Movement failed")
         end
@@ -200,7 +246,7 @@ class Player
     end
 
     def add_to_invent(item)
-        if(@inventory[0]=="nothing")
+        if(@inventory[0]=="Nothing")
             @inventory[0]= item
         else
             @inventory.unshift(item)
@@ -216,13 +262,6 @@ end
 =begin
 
 =end
-class MyWindow < Gosu::Window
-  def initialize
-    super 40, 40
-    @tune = Gosu::Sample.new('intro.wav')
-    @tune.play()
-  end
-end
 
 #public method that creates a buffer between text walls
 def textLine
@@ -236,6 +275,11 @@ end
 
 def titleScreen
   cleanScreen
+  @tune = Gosu::Sample.new('titleScreen.wav')
+  t = Thread.new {
+      @tune.play(0.75, 1)
+  }
+  t.join
   puts "__Game Title__"
   puts "\n\n"
   puts "Created By Nick A and Sam W"
@@ -250,8 +294,9 @@ def titleScreen
   puts "Inventory: Use this command to view the contents of your inventory."
   puts "Quit / Exit: Use this command to end the game."
   puts "\n\n"
-  puts "Press Any Key To Continue..."
+  puts "Press Enter To Continue..."
   gets
+  Thread.kill(t)
   cleanScreen
 end
 
@@ -265,13 +310,13 @@ def intro
   gets
   sleep(2)
   puts "I see."
-  sleep(2)
+  sleep(1)
   puts "Well then, #{your_name}"
   sleep(2)
   puts "In truth I dont really care about your answers."
   sleep(2)
   puts "What I really need you to do is..."
-  sleep(5)
+  sleep(4)
   puts "To snap out of it."
   sleep(2)
   cleanScreen
@@ -292,7 +337,16 @@ def roomSetup
   shack.add_examine_res("A slighty rusted padlock blocks the way. It might be rusted but you can't break it with your bare hands. It may be do-able if you had a pair of Bear-Hands...")
   shack.add_use_res("You try to smash the lock with your trusty rock but it has no effect.")
 
-  return [sroom, windmill, shack]
+  lake = Room.new("Lake","You see a crystalline body of water sprawled before you. You see a key dangling from a stick in the middle of the pond. There is a sign that reads Caution, water will dissolve your skin in O(n^2).",["Windmill"],["Lake","Sign","Key"],["Goggles","Rock"])
+  lake.add_examine_res("Nothing seems to ominous about this body of water except for the odd sign.")
+  lake.add_examine_res("You squint and make out some additional text on the sign that says the water will dissolve your eyes in O(1) time, whatever that means.")
+  lake.add_examine_res("A key on a stick in the lake, not much else to say about it.")
+  lake.add_use_res("You strap on your goggles and swan dive out into the open water. A cooling sensation covers your body. You would best describe it as if your whole body was a mouth \nthat had just consumed an entire pack of peppermint gum and then decided to engorge yourself with a gallon of water to wash it down. \nYou quickly make it to the sign, grab the key and dolphin dive your way back to the shoreline.")
+  lake.add_use_res("You take your rock in you fist and wind up your arm. Right before you send your rock to the bottom of the lake, you remember the good times you had with the rock,\nlike when it was given to you by a strange man named Billy Bob The Bold. You tuck the rock back into your pocket as you wipe a tear from your eye, you didn’t toss the rock, but you gained a friend. \nYou name the rock Gerald.")
+
+  trashpile = Room.new("TrashPile","An overflowing mountain of unsavoriness. Discarded junk is strewn about, all of it broken or filled with a mysterious brown substance that won’t be named.",["Feild"],["TrashPile"],[""])
+  trashpile.add_examine_res("You decide that you might find something useful, so you start poking around the trash heap. Eventually you find a pair of hot pink Goggles that have faded elephant prints on them.\nYou decide that they may come in handy if you ever meet a child on your adventure that you want to give pink eye, so you stash it into your pockets after vigorously scrubbing it in a basin of rainwater.G")
+  return [sroom, windmill, shack, lake,trashpile]
 end
 
 def playGame
