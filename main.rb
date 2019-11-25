@@ -329,7 +329,7 @@ end
 
 def roomSetup
   #Create the rooms and add refs
-  sroom = Room.new("Field","You find yourself in the middle of an open field.",["Windmill","Shack"],["Feild","Billy Bob"],[])
+  sroom = Room.new("Field","You find yourself in the middle of an open field.",["Windmill","Shack","TrashPile"],["Feild","Billy Bob"],[])
   sroom.add_examine_res("You see the towering visage of Billy Bob The Bold standing in the distance.")
   sroom.add_examine_res("Hello friend! My name is Billy Bob. Would you like a rock? Of course you would!\nHere take one, I have a million of these bad boys.R")
 
