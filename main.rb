@@ -106,13 +106,15 @@ class Player
         @name = name
         @room = room
         @gameOver = false;
-        @inventory = ["nothing"]
+        @inventory = ["Nothing"]
         @allRooms = allRooms
     end
 
     def end_game
         @gameOver = true;
-        puts("The lock pops off the door and tumbles to the ground as you turn the key. The inside of the shack is covered in a layer of dust and an old computer terminal sags against the back wall.\nYou walk over to it as it springs to life. A message sprawls out across the screen and suddenly everything makes sense. You very being, the meaning of life and the secrets of the universe all rolled into one.\nA tear rolls down your cheek, as you now understand the truth of this world. The world around fade from existence until the only remaining objects are the two words that set you free.\n")
+        puts("The lock pops off the door and tumbles to the ground as you turn the key. The inside of the shack is covered in a layer of dust and an old computer terminal sags against the back wall.
+              \nYou walk over to it as it springs to life. A message sprawls out across the screen and suddenly everything makes sense. You very being, the meaning of life and the secrets of the universe all rolled into one.
+              \nA tear rolls down your cheek, as you now understand the truth of this world. The world around fade from existence until the only remaining objects are the two words that set you free.\n")
         sleep(25)
         print("H")
         sleep(1)
@@ -123,6 +125,8 @@ class Player
         print("L")
         sleep(1)
         print("O ")
+        sleep(1)
+        print("\n")
         sleep(1)
         print("W")
         sleep(1)
@@ -178,7 +182,7 @@ class Player
                     puts("You got Goggles!!")
                     add_to_invent("Goggles")
                 else
-                    puts "You got nothing"
+                    puts "You got Nothing"
                 end
 
             else
@@ -277,7 +281,7 @@ def titleScreen
   cleanScreen
   @tune = Gosu::Sample.new('titleScreen.wav')
   t = Thread.new {
-      @tune.play(0.75, 1)
+      @tune.play(0.75, 1, true)
   }
   t.join
   puts "__Game Title__"
